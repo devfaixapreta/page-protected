@@ -1,6 +1,6 @@
 <?php
 //Senha de acesso para ser configurada
-$LOCK_KEYS = ['user' => 'admin', 'pass' => 'admin123'];
+$LOCK_KEYS = ['user' => 'admin', 'pass' => 'admin12379'];
 
 //Alterar o valor para cada projeto
 define('LOCK_SESSION_PAGE', 'KhasdjGdbfjdm_43das');
@@ -16,10 +16,10 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
-$args_filter = ['sair' => FILTER_SANITIZE_STRING, 'username' => FILTER_SANITIZE_STRING, 'userpassword' => FILTER_SANITIZE_STRING, 'token' => FILTER_SANITIZE_STRING];
+$args_filter = ['sair_page_protected' => FILTER_SANITIZE_STRING, 'username' => FILTER_SANITIZE_STRING, 'userpassword' => FILTER_SANITIZE_STRING, 'token' => FILTER_SANITIZE_STRING];
 $lock_form = filter_input_array(INPUT_POST, $args_filter);
 
-if (isset($lock_form['sair']) && $lock_form['sair'] === 'sair') {
+if (isset($lock_form['sair_page_protected']) && $lock_form['sair_page_protected'] === 'sair') {
     session_unset();
     $_SESSION[LOCK_SESSION_PAGE] = false;
 } elseif (isset($lock_form['token']) && isset($_SESSION['LOCK_TOKEN']) && $lock_form['token'] == $_SESSION['LOCK_TOKEN'] && isset($lock_form['username']) && $lock_form['username'] === $LOCK_KEYS['user'] && isset($lock_form['userpassword']) && $lock_form['userpassword'] === $LOCK_KEYS['pass']) {
@@ -51,7 +51,7 @@ if (!isset($_SESSION[LOCK_SESSION_PAGE]) || $_SESSION[LOCK_SESSION_PAGE] === fal
     <div style="border: 1px solid white;position: fixed;top: 0; left: 0; height: 25px; width: 100%;z-index: 500000;display: flex;background-color: black; color: white;align-content: center;">
         <div style="line-height:25px;width: 100%;margin: 0!important; text-align: center;font-size: 11px!important;"># # ACESSO PROTEGIDO POR SENHA # #</div>
         <form method="POST" action="" style="">
-            <input style="text-transform: uppercase;cursor: pointer ;margin: 0!important;padding:2px 15px!important;line-height: 15px;background-color: gold;color: #002a80;color: black;" type="submit" name="sair" value="sair">
+            <input style="text-transform: uppercase;cursor: pointer ;margin: 0!important;padding:2px 15px!important;line-height: 15px;background-color: gold;color: #002a80;color: black;" type="submit" name="sair_page_protected" value="sair">
         </form>
     </div>
     <div style="margin-top: 25px;"></div>
