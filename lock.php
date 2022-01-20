@@ -21,8 +21,8 @@ if (!$Lock->logged()) {
            
             <input style="margin-bottom: 9px; color: #0a0a0a;  font-size: 1rem; letter-spacing: .01rem; line-height: 1.6rem; padding: .4rem .3rem; border: 1px solid #cacaca; background-color: #fefefe; border-radius: 0; height: 2.35rem;" type="text" name="username" placeholder="Usuário">
             <input style="margin-bottom: 9px; color: #0a0a0a;  font-size: 1rem; letter-spacing: .01rem; line-height: 1.6rem; padding: .4rem .3rem; border: 1px solid #cacaca; background-color: #fefefe; border-radius: 0; height: 2.35rem;" type="password" name="userpassword" placeholder="Senha">
-            <input style="background-color: #0f66b1!important;padding: 7px 11px!important;font-size: 15px; border-radius: 1px; color: inherit; border: none;cursor: pointer;color: #fff;box-shadow: 0 2px 5px rgba(0,0,0,.16), 0 2px 10px rgba(0,0,0,.12); margin-top: 16px; margin-bottom: 20px!important;font-weight: 700;" type="submit" value="entrar">
             <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token']; ?>">
+            <input style="background-color: #0f66b1!important;padding: 7px 11px!important;font-size: 15px; border-radius: 1px; color: inherit; border: none;cursor: pointer;color: #fff;box-shadow: 0 2px 5px rgba(0,0,0,.16), 0 2px 10px rgba(0,0,0,.12); margin-top: 16px; margin-bottom: 20px!important;font-weight: 700;" type="submit" value="entrar">
              <span style="text-align: center"><?= $Lock->get_error(); ?></span>
         </form>
     </div>
