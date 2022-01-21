@@ -89,7 +89,6 @@ class ClassLock {
      * @return boolean true: valida, false: expirada
      */
     private function is_sessionExpiry() {
-        echo time() - $_SESSION[$this->session_name]['expiry'];
         return isset($_SESSION[$this->session_name]['expiry']) && time() - $_SESSION[$this->session_name]['expiry'] < $this->expiry ? true : false;
     }
 
