@@ -21,17 +21,6 @@ class ClassLock {
         if (session_status() !== PHP_SESSION_ACTIVE) {
             session_start();
         }
-
-        if (isset($_POST['form_page_protected'])) {
-            $args_filter = ['form_page_protected' => FILTER_SANITIZE_STRING, 'username' => FILTER_SANITIZE_STRING, 'userpassword' => FILTER_SANITIZE_STRING];
-            $lock_form = filter_input_array(INPUT_POST, $args_filter);
-
-            if ($lock_form['form_page_protected'] === 'sair') {
-                $this->logout();
-            } else {
-                $this->login($lock_form['username'], $lock_form['userpassword']);
-            }
-        }
     }
 
     /**

@@ -2,6 +2,19 @@
 require 'ClassLock.php';
 
 $Lock = new ClassLock('KhasdjGdbfjdm', 'admin', 'admin', 20);
+if (isset($_POST['form_page_protected'])) {
+    $args_filter = ['form_page_protected' => FILTER_SANITIZE_STRING, 'username' => FILTER_SANITIZE_STRING, 'userpassword' => FILTER_SANITIZE_STRING];
+    $lock_form = filter_input_array(INPUT_POST, $args_filter);
+
+    if ($lock_form['form_page_protected'] === 'sair') {
+        $Lock->logout();
+    } else {
+        if($Lock->login($lock_form['username'], $lock_form['userpassword'])){
+            header('Refresh:0');
+            die;
+        }
+    }
+}
 
 if (!$Lock->logged()) {
     ?>
