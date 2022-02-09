@@ -4,7 +4,7 @@ class ClassLock {
 
     public $session_name = "lock_";
     public $expiry = 86400; // 24 horas
-    public $user;
+    public $users = [];
     public $_error = null;
 
     /**
@@ -16,10 +16,29 @@ class ClassLock {
     public function __construct(string $session_name, string $user, string $password, int $expiry = null) {
         $this->session_name .= $session_name;
         $this->expiry = is_null($expiry) ? $this->expiry : $expiry;
-        $this->user['user'] = $user;
-        $this->user['password'] = $password;
+        $this->users[] = ['user' => $user, 'password' => $password];
         if (session_status() !== PHP_SESSION_ACTIVE) {
             session_start();
+        }
+    }
+
+    /**
+     * Verifica se existe usuario com o mesmo nome 
+     * Se não existir adiciona usuario e senha
+     * @param string $user
+     * @param string $password
+     */
+    public function addUser(string $user, string $password) {
+        $exist = false;
+        foreach ($this->users as $usuario) {
+            if ($user == $usuario['user']) {
+                $exist = true;
+                break;
+            }
+        }
+
+        if (!$exist) {
+            $this->users[] = ['user' => $user, 'password' => $password];
         }
     }
 
@@ -32,11 +51,16 @@ class ClassLock {
     public function login(string $user, string $password) {
         $user = strip_tags($user);
         $password = strip_tags($password);
-        if ($this->is_equals($this->user['user'], $user) && $this->is_equals($this->user['password'], $password)) {
-            $_SESSION[$this->session_name]['logged'] = true;
-            $_SESSION[$this->session_name]['user'] = $this->sessionUser();
-            $_SESSION[$this->session_name]['expiry'] = time();
-            return true;
+        foreach ($this->users as $usuario) {
+            if ($user == $usuario['user']) {
+                if ($this->is_equals($usuario['password'], $password)) {
+                    $_SESSION[$this->session_name]['logged'] = true;
+                    $_SESSION[$this->session_name]['user'] = $this->sessionUser();
+                    $_SESSION[$this->session_name]['expiry'] = time();
+                    return true;
+                }
+                break;
+            }
         }
         $this->_error = "Usuário ou Senha incorreto";
         return false;
